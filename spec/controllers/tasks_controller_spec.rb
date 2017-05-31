@@ -12,4 +12,15 @@ RSpec.describe TasksController, type: :controller do
 			expect(response_value.count).to eq(2)
 		end
 	end
+
+	describe "tasks#update" do
+		it "should all tasks to be marked as done" do
+			task = FactoryGirl.create(:task, done: false)
+			#put :update, id: task.id, task: { done: true }
+			put :update, params: { id: task.id, task: { done: true } }
+			expect(response).to have_http_status(:success)
+			task.reload
+			expect(task.done).to eq(true)
+		end
+	end
 end
